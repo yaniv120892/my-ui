@@ -1,4 +1,5 @@
 import { Stack, Typography } from '@mui/material';
+import { SHELL } from '../theme/createAppTheme.js';
 
 /** Desktop page heading; on phones the shell's top bar already shows the page name. */
 export function PageHeader({
@@ -16,8 +17,8 @@ export function PageHeader({
       spacing={1.5}
       sx={{ mb: 3, alignItems: { sm: 'center' }, justifyContent: 'space-between' }}
     >
-      <Stack spacing={0.5} sx={{ display: { xs: subtitle ? 'flex' : 'none', md: 'flex' } }}>
-        <Typography variant="h1" sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Stack spacing={0.5} sx={{ display: { xs: subtitle ? 'flex' : 'none', [SHELL.desktopBreakpoint]: 'flex' } }}>
+        <Typography variant="h1" sx={{ display: { xs: 'none', [SHELL.desktopBreakpoint]: 'block' } }}>
           {title}
         </Typography>
         {subtitle && (

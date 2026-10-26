@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import type { AppUrls } from './registry.types';
+import type { AppUrls } from './registry.types.js';
 
 const AppUrlsContext = createContext<AppUrls>({});
 

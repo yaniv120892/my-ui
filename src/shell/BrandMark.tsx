@@ -1,14 +1,19 @@
 'use client';
 
 import { Box, Stack, Typography } from '@mui/material';
-import { APPS } from '../apps/registry';
-import type { AppId } from '../apps/registry.types';
-import { useTranslations } from '../i18n/I18nProvider';
+import { APP_ICONS } from '../apps/registry.js';
+import type { AppId } from '../apps/registry.types.js';
+import { useTranslations } from '../i18n/I18nProvider.js';
 
-export function BrandMark({ app, size = 'medium' }: { app: AppId; size?: 'medium' | 'large' }) {
-  const t = useTranslations();
-  const Icon = APPS[app].icon;
-  const tile = size === 'large' ? 44 : 32;
+const SIZES = {
+  medium: { tile: 32, icon: 'small', variant: 'h5' },
+  large: { tile: 44, icon: 'medium', variant: 'h2' },
+} as const;
+
+export function BrandMark({ app, size = 'medium' }: { app: AppId; size?: keyof typeof SIZES }) {
+  const translate = useTranslations();
+  const Icon = APP_ICONS[app];
+  const { tile, icon, variant } = SIZES[size];
   return (
     <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
       <Box
@@ -23,10 +28,10 @@ export function BrandMark({ app, size = 'medium' }: { app: AppId; size?: 'medium
           flexShrink: 0,
         }}
       >
-        <Icon fontSize={size === 'large' ? 'medium' : 'small'} />
+        <Icon fontSize={icon} />
       </Box>
-      <Typography variant={size === 'large' ? 'h2' : 'h5'} component="span">
-        {t(`app.${app}`)}
+      <Typography variant={variant} component="span">
+        {translate(`app.${app}`)}
       </Typography>
     </Stack>
   );

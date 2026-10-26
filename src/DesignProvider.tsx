@@ -6,16 +6,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import rtlPlugin from '@mui/stylis-plugin-rtl';
 import { prefixer } from 'stylis';
-import { AppUrlsProvider } from './apps/AppUrlsContext';
-import type { AppUrls } from './apps/registry.types';
-import { I18nProvider } from './i18n/I18nProvider';
-import { localeDirection } from './i18n/locale';
-import type { Locale } from './i18n/locale.types';
-import type { Messages } from './i18n/messages.types';
-import { createAppTheme } from './theme/createAppTheme';
+import { AppUrlsProvider } from './apps/AppUrlsContext.js';
+import type { AppUrls } from './apps/registry.types.js';
+import { I18nProvider } from './i18n/I18nProvider.js';
+import { localeDirection } from './i18n/locale.js';
+import type { Locale } from './i18n/locale.types.js';
+import type { Messages } from './i18n/messages.types.js';
+import { createAppTheme } from './theme/createAppTheme.js';
 
 const RTL_CACHE = { key: 'muirtl', stylisPlugins: [prefixer, rtlPlugin] };
 const LTR_CACHE = { key: 'mui', stylisPlugins: [prefixer] };
+const NO_APP_URLS: AppUrls = {};
 
 /**
  * Theme, emotion cache, CssBaseline and i18n in one provider. Render it in the root layout
@@ -25,7 +26,7 @@ const LTR_CACHE = { key: 'mui', stylisPlugins: [prefixer] };
 export function DesignProvider({
   locale,
   messages,
-  appUrls = {},
+  appUrls = NO_APP_URLS,
   children,
 }: {
   locale: Locale;

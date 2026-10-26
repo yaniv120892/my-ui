@@ -1,9 +1,9 @@
 'use client';
 
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
-import type { AppId } from '../apps/registry.types';
-import { BrandMark } from './BrandMark';
-import { LanguageToggle } from './LanguageToggle';
+import type { AppId } from '../apps/registry.types.js';
+import { BrandMark } from './BrandMark.js';
+import { LanguageToggle } from './LanguageToggle.js';
 
 /** The centred card every app's login, signup and verify pages sit in. */
 export function AuthCard({

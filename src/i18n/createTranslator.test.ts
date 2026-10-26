@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createTranslator } from './createTranslator';
+import { createTranslator } from './createTranslator.js';
 
 describe('createTranslator', () => {
   it('translates app keys with variables and falls back to shared keys', () => {

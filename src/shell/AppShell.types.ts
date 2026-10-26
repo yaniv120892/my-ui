@@ -1,5 +1,5 @@
 import type { SvgIconComponent } from '@mui/icons-material';
-import type { AppId } from '../apps/registry.types';
+import type { AppId } from '../apps/registry.types.js';
 
 export type NavItem = {
   href: string;

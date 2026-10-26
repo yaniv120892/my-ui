@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { commonMessages, formatMessage } from './messages';
+import { commonMessages, formatMessage } from './messages.js';
 
 describe('formatMessage', () => {
   it('fills placeholders', () => {
@@ -10,6 +10,10 @@ describe('formatMessage', () => {
 
   it('leaves unknown placeholders visible', () => {
     expect(formatMessage({ template: 'Hi {name}', variables: {} })).toBe('Hi {name}');
+  });
+
+  it('does not fill placeholders from Object.prototype', () => {
+    expect(formatMessage({ template: 'Built by {constructor}', variables: {} })).toBe('Built by {constructor}');
   });
 });
 

@@ -1,7 +1,7 @@
-import type { Translate } from './I18nProvider.types';
-import type { Locale } from './locale.types';
-import { commonMessages, formatMessage } from './messages';
-import type { Messages } from './messages.types';
+import type { Translate } from './I18nProvider.types.js';
+import type { Locale } from './locale.types.js';
+import { commonMessages, formatMessage } from './messages.js';
+import type { Messages } from './messages.types.js';
 
 /** The non-hook translator, for server components, route handlers and emails. */
 export function createTranslator<M extends Messages>({

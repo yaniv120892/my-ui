@@ -1,15 +1,14 @@
-import type { Direction, Locale } from './locale.types';
-import type { CommonMessages } from './messages';
-import type { MessageVariables, Messages } from './messages.types';
-
-export type I18nContextValue = {
-  locale: Locale;
-  direction: Direction;
-  messages: Messages;
-  setLocale: (locale: Locale) => void;
-};
+import type { Locale } from './locale.types.js';
+import type { CommonMessages, MessageVariables, Messages } from './messages.types.js';
 
 export type Translate<M extends Messages> = (
   key: keyof (M & CommonMessages) & string,
   variables?: MessageVariables,
 ) => string;
+
+export type I18nContextValue = {
+  locale: Locale;
+  /** Untyped by key; `useTranslations<M>()` narrows it to the app's message keys. */
+  translate: (key: string, variables?: MessageVariables) => string;
+  setLocale: (locale: Locale) => void;
+};

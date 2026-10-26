@@ -20,8 +20,7 @@ What it gives each app:
 npm install github:yaniv120892/my-ui#v0.1.0
 ```
 
-Peer dependencies: `next@>=16`, `react@19`, `@mui/material@^9`, `@mui/icons-material@^9`,
-`@mui/material-nextjs@^9`, `@emotion/react`, `@emotion/styled`.
+The app also installs the packages under `peerDependencies` in `package.json`.
 
 ## Use
 
@@ -89,11 +88,15 @@ App layout:
 
 ### Vitest in a consuming app
 
-The package ships ES modules with extensionless imports for the bundler. Let Vite process it:
+The package imports `next/*` subpaths, which Node's ESM resolver cannot find because Next
+publishes no exports map. Let Vite process it:
 
 ```ts
 test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } }
 ```
+
+`DesignProvider` and `AppShell` call `useRouter` and `usePathname`, so specs that render them mock
+`next/navigation`.
 
 ## Conventions shared by every app
 
@@ -103,12 +106,6 @@ test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } }
 - Money in / gains: `palette.charts.positive`. Money out / losses: `palette.charts.negative`.
 - Format numbers, currency and dates with `useFormat()`, never `toLocaleString()` with a fixed locale.
 
-## Develop
+## Release
 
-```bash
-npm install
-npm test
-npm run build
-```
-
-Release: bump `version`, merge, tag `vX.Y.Z`, then bump the tag in each app.
+Bump `version`, merge, tag `vX.Y.Z`, then bump the tag in each app.

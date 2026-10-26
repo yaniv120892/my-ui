@@ -1,13 +1,14 @@
 'use client';
 
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
-import { useAppUrls } from '../apps/AppUrlsContext';
-import { APP_IDS, APPS } from '../apps/registry';
-import type { AppId } from '../apps/registry.types';
-import { useTranslations } from '../i18n/I18nProvider';
+import { useAppUrls } from '../apps/AppUrlsContext.js';
+import { APP_IDS } from '../apps/appIds.js';
+import { APP_ICONS } from '../apps/registry.js';
+import type { AppId } from '../apps/registry.types.js';
+import { useTranslations } from '../i18n/I18nProvider.js';
 
 export function AppSwitcher({ current }: { current: AppId }) {
-  const t = useTranslations();
+  const translate = useTranslations();
   const appUrls = useAppUrls();
   const others = APP_IDS.flatMap((id) => {
     const url = appUrls[id];
@@ -22,18 +23,18 @@ export function AppSwitcher({ current }: { current: AppId }) {
       sx={{ px: 1.5 }}
       subheader={
         <ListSubheader disableSticky sx={{ bgcolor: 'transparent', lineHeight: 2.5 }}>
-          {t('shell.otherApps')}
+          {translate('shell.otherApps')}
         </ListSubheader>
       }
     >
       {others.map(({ id, url }) => {
-        const Icon = APPS[id].icon;
+        const Icon = APP_ICONS[id];
         return (
-          <ListItemButton key={id} component="a" href={url} sx={{ borderRadius: 2 }}>
-            <ListItemIcon sx={{ minWidth: 38 }}>
+          <ListItemButton key={id} component="a" href={url}>
+            <ListItemIcon>
               <Icon fontSize="small" color="primary" />
             </ListItemIcon>
-            <ListItemText primary={t(`app.${id}`)} />
+            <ListItemText primary={translate(`app.${id}`)} />
           </ListItemButton>
         );
       })}

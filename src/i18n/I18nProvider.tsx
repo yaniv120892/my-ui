@@ -2,11 +2,11 @@
 
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { LOCALE_COOKIE, localeDirection } from './locale';
-import type { Locale } from './locale.types';
-import { commonMessages, formatMessage } from './messages';
-import type { Messages } from './messages.types';
-import type { I18nContextValue, Translate } from './I18nProvider.types';
+import { createTranslator } from './createTranslator.js';
+import { LOCALE_COOKIE } from './locale.js';
+import type { Locale } from './locale.types.js';
+import type { Messages } from './messages.types.js';
+import type { I18nContextValue, Translate } from './I18nProvider.types.js';
 
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
@@ -25,7 +25,7 @@ export function I18nProvider({
 
   // The server reads the cookie to render <html lang dir>, so only a refresh flips the document.
   const setLocale = useCallback(
-    (next: Locale) => {
+    function setLocale(next: Locale) {
       document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${ONE_YEAR_SECONDS}; samesite=lax`;
       router.refresh();
     },
@@ -35,8 +35,7 @@ export function I18nProvider({
   const value = useMemo<I18nContextValue>(
     () => ({
       locale,
-      direction: localeDirection(locale),
-      messages: { ...commonMessages[locale], ...messages },
+      translate: createTranslator({ locale, messages }),
       setLocale,
     }),
     [locale, messages, setLocale],
@@ -58,9 +57,5 @@ export function useI18n(): I18nContextValue {
  * Apps wrap it once: `export const useT = () => useTranslations<typeof en>();`
  */
 export function useTranslations<M extends Messages = Messages>(): Translate<M> {
-  const { messages } = useI18n();
-  return useCallback<Translate<M>>(
-    (key, variables) => formatMessage({ template: messages[key] ?? key, variables }),
-    [messages],
-  );
+  return useI18n().translate;
 }

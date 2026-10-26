@@ -1,6 +1,6 @@
 import { createTheme, type Theme } from '@mui/material/styles';
-import type { Direction } from '../i18n/locale.types';
-import type { ChartPalette } from './createAppTheme.types';
+import type { Direction } from '../i18n/locale.types.js';
+import type { ChartPalette } from './createAppTheme.types.js';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -11,14 +11,32 @@ declare module '@mui/material/styles' {
   }
 }
 
+const LIGHT = {
+  primary: '#7b61ff',
+  secondary: '#00b8d9',
+  success: '#16a34a',
+  error: '#dc2626',
+  warning: '#f59e0b',
+  info: '#0ea5e9',
+};
+
+const DARK = {
+  primary: '#9d8bff',
+  secondary: '#22d3ee',
+  success: '#4ade80',
+  error: '#f87171',
+  warning: '#fbbf24',
+  info: '#38bdf8',
+};
+
 export const CHART_SERIES = [
-  '#7b61ff',
-  '#00b8d9',
-  '#f59e0b',
-  '#16a34a',
+  LIGHT.primary,
+  LIGHT.secondary,
+  LIGHT.warning,
+  LIGHT.success,
   '#ef4444',
   '#8b5cf6',
-  '#0ea5e9',
+  LIGHT.info,
   '#f97316',
 ];
 
@@ -30,39 +48,40 @@ export const SHELL = {
   contentMaxWidth: 1200,
   appBarHeight: 56,
   bottomNavHeight: 64,
+  desktopBreakpoint: 'md',
 } as const;
 
-export function createAppTheme(direction: Direction = 'rtl'): Theme {
+export function createAppTheme(direction: Direction): Theme {
   return createTheme({
     direction,
     cssVariables: { colorSchemeSelector: 'data' },
     colorSchemes: {
       light: {
         palette: {
-          primary: { main: '#7b61ff' },
-          secondary: { main: '#00b8d9' },
-          success: { main: '#16a34a' },
-          error: { main: '#dc2626' },
-          warning: { main: '#f59e0b' },
-          info: { main: '#0ea5e9' },
+          primary: { main: LIGHT.primary },
+          secondary: { main: LIGHT.secondary },
+          success: { main: LIGHT.success },
+          error: { main: LIGHT.error },
+          warning: { main: LIGHT.warning },
+          info: { main: LIGHT.info },
           background: { default: '#f7f7f9', paper: '#ffffff' },
           divider: '#e7e7ec',
           text: { primary: '#17171c', secondary: '#63636e' },
-          charts: { positive: '#16a34a', negative: '#dc2626', series: CHART_SERIES },
+          charts: { positive: LIGHT.success, negative: LIGHT.error, series: CHART_SERIES },
         },
       },
       dark: {
         palette: {
-          primary: { main: '#9d8bff' },
-          secondary: { main: '#22d3ee' },
-          success: { main: '#4ade80' },
-          error: { main: '#f87171' },
-          warning: { main: '#fbbf24' },
-          info: { main: '#38bdf8' },
+          primary: { main: DARK.primary },
+          secondary: { main: DARK.secondary },
+          success: { main: DARK.success },
+          error: { main: DARK.error },
+          warning: { main: DARK.warning },
+          info: { main: DARK.info },
           background: { default: '#101216', paper: '#181b21' },
           divider: '#2a2e37',
           text: { primary: '#f0f0f4', secondary: '#a2a2ad' },
-          charts: { positive: '#4ade80', negative: '#f87171', series: CHART_SERIES },
+          charts: { positive: DARK.success, negative: DARK.error, series: CHART_SERIES },
         },
       },
     },
@@ -95,6 +114,23 @@ export function createAppTheme(direction: Direction = 'rtl'): Theme {
       MuiAppBar: { defaultProps: { elevation: 0, color: 'transparent' } },
       MuiTextField: { defaultProps: { size: 'small' } },
       MuiTooltip: { defaultProps: { arrow: true } },
+      MuiListItemButton: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            borderRadius: `calc(2 * ${theme.vars.shape.borderRadius})`,
+            '&.Mui-selected, &.Mui-selected:hover': {
+              backgroundColor: theme.vars.palette.primary.main,
+              color: theme.vars.palette.primary.contrastText,
+              '& .MuiListItemIcon-root': { color: theme.vars.palette.primary.contrastText },
+            },
+          }),
+        },
+      },
+      MuiListItemIcon: { styleOverrides: { root: { minWidth: 38 } } },
+      // MUI's 80px minimum makes five actions 400px, wider than most phones.
+      MuiBottomNavigationAction: {
+        styleOverrides: { root: ({ theme }) => ({ minWidth: 0, paddingInline: theme.spacing(0.5) }) },
+      },
     },
   });
 }

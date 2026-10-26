@@ -1,15 +1,23 @@
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { DesignProvider } from '../DesignProvider';
-import type { Locale } from '../i18n/locale.types';
-import { AppShell } from './AppShell';
+import { DesignProvider } from '../DesignProvider.js';
+import type { Locale } from '../i18n/locale.types.js';
+import { AppShell } from './AppShell.js';
+
+const navigation = vi.hoisted(() => ({ pathname: '/transactions/42', refresh: () => {} }));
 
 vi.mock('next/navigation', () => ({
-  usePathname: () => '/transactions/42',
-  useRouter: () => ({ refresh: vi.fn() }),
+  usePathname: () => navigation.pathname,
+  useRouter: () => ({ refresh: navigation.refresh }),
 }));
+
+beforeEach(() => {
+  navigation.pathname = '/transactions/42';
+  navigation.refresh = vi.fn();
+  document.cookie = 'locale=; max-age=0; path=/';
+});
 
 afterEach(cleanup);
 
@@ -23,6 +31,7 @@ function renderShell(locale: Locale) {
         nav={[
           { href: '/transactions', label: 'Transactions', icon: ReceiptLongOutlinedIcon, badge: 3, showInBottomBar: true },
           { href: '/settings', label: 'Settings', icon: SettingsOutlinedIcon },
+          { href: '/settings/profile', label: 'Profile', icon: SettingsOutlinedIcon },
         ]}
         accountLabel="me@example.com"
         onLogout={vi.fn()}
@@ -60,5 +69,46 @@ describe('AppShell', () => {
   it('renders the phone bottom bar with a More entry when items opt in', () => {
     renderShell('en');
     expect(screen.getByRole('button', { name: 'More', hidden: true })).toBeTruthy();
+  });
+
+  it('selects only the most specific nav entry for a nested route', () => {
+    navigation.pathname = '/settings/profile';
+    renderShell('en');
+    const selectedLabels = screen
+      .getAllByRole('link', { hidden: true })
+      .filter((link) => link.classList.contains('Mui-selected'))
+      .map((link) => link.textContent);
+    expect(new Set(selectedLabels)).toEqual(new Set(['Profile']));
+    expect(screen.getByRole('heading', { level: 1, hidden: true }).textContent).toBe('Profile');
+  });
+
+  it('selects More for a page behind it, and nothing for a route outside nav', () => {
+    navigation.pathname = '/settings';
+    renderShell('en');
+    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).toContain('Mui-selected');
+    cleanup();
+
+    navigation.pathname = '/onboarding';
+    renderShell('en');
+    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).not.toContain('Mui-selected');
+  });
+
+  it('lets five bottom-bar actions fit a phone by dropping MUI\'s 80px minimum', () => {
+    renderShell('en');
+    const more = screen.getByRole('button', { name: 'More', hidden: true });
+    expect(Number.parseFloat(getComputedStyle(more).minWidth)).toBe(0);
+  });
+
+  it('keeps the chrome outside the main landmark', () => {
+    renderShell('en');
+    const main = screen.getByRole('main');
+    expect(main.textContent).toBe('page body');
+  });
+
+  it('stores the chosen language in the locale cookie and refreshes the server render', () => {
+    renderShell('he');
+    fireEvent.click(screen.getAllByText('English')[0]!);
+    expect(document.cookie).toContain('locale=en');
+    expect(navigation.refresh).toHaveBeenCalledOnce();
   });
 });

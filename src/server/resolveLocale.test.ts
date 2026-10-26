@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveLocale } from './resolveLocale';
+import { resolveLocale } from './resolveLocale.js';
 
 describe('resolveLocale', () => {
   it('prefers the cookie over the browser language', () => {

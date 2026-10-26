@@ -1,4 +1,4 @@
-import type { Dictionary, MessageVariables, Messages } from './messages.types';
+import type { CommonMessages, Dictionary, MessageVariables } from './messages.types.js';
 
 /** Replaces `{name}` placeholders; an unknown placeholder is left visible so it gets noticed. */
 export function formatMessage({
@@ -12,7 +12,7 @@ export function formatMessage({
     return template;
   }
   return template.replace(/\{(\w+)\}/g, (placeholder, name: string) =>
-    name in variables ? String(variables[name]) : placeholder,
+    Object.hasOwn(variables, name) ? String(variables[name]) : placeholder,
   );
 }
 
@@ -28,9 +28,7 @@ const commonEn = {
   'shell.switchLanguage': 'עברית',
   'shell.switchLanguageHint': 'Switch to Hebrew',
   'shell.otherApps': 'Other apps',
-} satisfies Messages;
-
-export type CommonMessages = typeof commonEn;
+} satisfies CommonMessages;
 
 export const commonMessages: Dictionary<CommonMessages> = {
   en: commonEn,
