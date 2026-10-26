@@ -16,20 +16,28 @@ describe('requestLocale', () => {
     expect(requestLocale(request)).toBe('en');
   });
 
-  it('leaves the body readable, before and after the body is read', async () => {
-    const postWithBody = () =>
-      new Request('https://app.example.test', {
-        method: 'POST',
-        headers: { cookie: 'locale=en' },
-        body: JSON.stringify({ email: 'user@example.com' }),
-      });
+  it('takes the last of duplicate locale cookies, as cookies() does', () => {
+    const request = new Request('https://app.example.test', { headers: { cookie: 'locale=he; locale=en' } });
+    expect(requestLocale(request)).toBe('en');
+  });
 
-    const readFirst = postWithBody();
-    await readFirst.json();
-    expect(requestLocale(readFirst)).toBe('en');
+  it('works on a request whose body was already read', async () => {
+    const request = postWithBody();
+    await request.json();
+    expect(requestLocale(request)).toBe('en');
+  });
 
-    const readAfter = postWithBody();
-    expect(requestLocale(readAfter)).toBe('en');
-    await expect(readAfter.json()).resolves.toEqual({ email: 'user@example.com' });
+  it('leaves the body readable for the handler', async () => {
+    const request = postWithBody();
+    expect(requestLocale(request)).toBe('en');
+    await expect(request.json()).resolves.toEqual({ email: 'user@example.com' });
   });
 });
+
+function postWithBody(): Request {
+  return new Request('https://app.example.test', {
+    method: 'POST',
+    headers: { cookie: 'locale=en' },
+    body: JSON.stringify({ email: 'user@example.com' }),
+  });
+}
