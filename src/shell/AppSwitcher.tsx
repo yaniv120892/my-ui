@@ -1,12 +1,21 @@
 'use client';
 
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
+import { useAppUrls } from '../apps/AppUrlsContext';
 import { APP_IDS, APPS } from '../apps/registry';
 import type { AppId } from '../apps/registry.types';
 import { useTranslations } from '../i18n/I18nProvider';
 
 export function AppSwitcher({ current }: { current: AppId }) {
   const t = useTranslations();
+  const appUrls = useAppUrls();
+  const others = APP_IDS.flatMap((id) => {
+    const url = appUrls[id];
+    return id !== current && url ? [{ id, url }] : [];
+  });
+  if (others.length === 0) {
+    return null;
+  }
   return (
     <List
       dense
@@ -17,10 +26,10 @@ export function AppSwitcher({ current }: { current: AppId }) {
         </ListSubheader>
       }
     >
-      {APP_IDS.filter((id) => id !== current).map((id) => {
+      {others.map(({ id, url }) => {
         const Icon = APPS[id].icon;
         return (
-          <ListItemButton key={id} component="a" href={APPS[id].url} sx={{ borderRadius: 2 }}>
+          <ListItemButton key={id} component="a" href={url} sx={{ borderRadius: 2 }}>
             <ListItemIcon sx={{ minWidth: 38 }}>
               <Icon fontSize="small" color="primary" />
             </ListItemIcon>

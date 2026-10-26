@@ -33,6 +33,7 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { DesignProvider } from '@yaniv120892/my-ui';
 import { getLocale, localeDirection } from '@yaniv120892/my-ui/server';
 import { messages } from '@/i18n/messages';
+import { APP_URLS } from '@/config/appUrls'; // { investments: 'https://…', shopping: 'https://…' }
 
 const heebo = Heebo({ subsets: ['hebrew', 'latin'], variable: '--font-sans', display: 'swap' });
 
@@ -42,7 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} dir={localeDirection(locale)} className={heebo.variable} suppressHydrationWarning>
       <body>
         <InitColorSchemeScript attribute="data" />
-        <DesignProvider locale={locale} messages={messages[locale]}>
+        <DesignProvider locale={locale} messages={messages[locale]} appUrls={APP_URLS}>
           {children}
         </DesignProvider>
       </body>

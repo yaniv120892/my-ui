@@ -13,9 +13,11 @@ vi.mock('next/navigation', () => ({
 
 afterEach(cleanup);
 
+const APP_URLS = { expenses: 'https://expenses.example.test', shopping: 'https://shopping.example.test' };
+
 function renderShell(locale: Locale) {
   return render(
-    <DesignProvider locale={locale} messages={{}}>
+    <DesignProvider locale={locale} messages={{}} appUrls={APP_URLS}>
       <AppShell
         app="expenses"
         nav={[
@@ -45,13 +47,14 @@ describe('AppShell', () => {
     expect(screen.getAllByText('עברית').length).toBeGreaterThan(0);
   });
 
-  it('marks the nested route active and links the other apps', () => {
+  it('marks the nested route active and links only the other apps that have a URL', () => {
     renderShell('en');
     const active = screen.getAllByRole('link', { name: /Transactions/ });
     expect(active.some((link) => link.classList.contains('Mui-selected'))).toBe(true);
     const otherApps = screen.getAllByRole('link', { name: 'My Shopping' });
-    expect(otherApps[0]?.getAttribute('href')).toBe('https://yaniv-shopping.vercel.app');
+    expect(otherApps[0]?.getAttribute('href')).toBe('https://shopping.example.test');
     expect(screen.queryAllByRole('link', { name: 'My Expenses' })).toHaveLength(0);
+    expect(screen.queryAllByRole('link', { name: 'My Investments' })).toHaveLength(0);
   });
 
   it('renders the phone bottom bar with a More entry when items opt in', () => {

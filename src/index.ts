@@ -1,6 +1,7 @@
 export { DesignProvider } from './DesignProvider';
 export { APP_IDS, APPS } from './apps/registry';
-export type { AppEntry, AppId } from './apps/registry.types';
+export type { AppEntry, AppId, AppUrls } from './apps/registry.types';
+export { useAppUrls } from './apps/AppUrlsContext';
 export { I18nProvider, useI18n, useTranslations } from './i18n/I18nProvider';
 export type { Translate } from './i18n/I18nProvider.types';
 export { DEFAULT_LOCALE, LOCALES, LOCALE_COOKIE, intlLocale, isLocale, localeDirection } from './i18n/locale';

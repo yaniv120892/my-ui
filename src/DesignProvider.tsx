@@ -6,6 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import rtlPlugin from '@mui/stylis-plugin-rtl';
 import { prefixer } from 'stylis';
+import { AppUrlsProvider } from './apps/AppUrlsContext';
+import type { AppUrls } from './apps/registry.types';
 import { I18nProvider } from './i18n/I18nProvider';
 import { localeDirection } from './i18n/locale';
 import type { Locale } from './i18n/locale.types';
@@ -18,14 +20,17 @@ const LTR_CACHE = { key: 'mui', stylisPlugins: [prefixer] };
 /**
  * Theme, emotion cache, CssBaseline and i18n in one provider. Render it in the root layout
  * with the locale from `getLocale()` (`@yaniv120892/my-ui/server`) and the app's messages for it.
+ * `appUrls` feeds the "Other apps" links; an app without a URL is left out.
  */
 export function DesignProvider({
   locale,
   messages,
+  appUrls = {},
   children,
 }: {
   locale: Locale;
   messages: Messages;
+  appUrls?: AppUrls;
   children: React.ReactNode;
 }) {
   const direction = localeDirection(locale);
@@ -38,7 +43,7 @@ export function DesignProvider({
       <ThemeProvider theme={theme} defaultMode="system">
         <CssBaseline />
         <I18nProvider locale={locale} messages={messages}>
-          {children}
+          <AppUrlsProvider value={appUrls}>{children}</AppUrlsProvider>
         </I18nProvider>
       </ThemeProvider>
     </AppRouterCacheProvider>
