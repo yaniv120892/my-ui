@@ -97,8 +97,8 @@ test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } }
 ## Conventions shared by every app
 
 - Names: "My Expenses" / "ההוצאות שלי", "My Investments" / "ההשקעות שלי", "My Shopping" / "הקניות שלי".
-- Use physical CSS sides (`ml`, `left`, `borderRight`) in `sx`; the RTL plugin flips them.
-  Logical properties (`marginInlineStart`) would be flipped twice.
+- Write layouts for LTR. Physical sides in `sx` (`ml`, `left`, `borderRight`) are flipped by the
+  RTL plugin; logical ones (`marginInlineStart`) are flipped by the browser. Never hand-mirror.
 - Money in / gains: `palette.charts.positive`. Money out / losses: `palette.charts.negative`.
 - Format numbers, currency and dates with `useFormat()`, never `toLocaleString()` with a fixed locale.
 
