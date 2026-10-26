@@ -149,7 +149,12 @@ export function AppShell({
             <BottomNavigation
               showLabels
               value={bottomBarValue}
-              sx={{ height: SHELL.bottomNavHeight, bgcolor: 'transparent' }}
+              sx={{
+                height: SHELL.bottomNavHeight,
+                bgcolor: 'transparent',
+                // MUI's 80px minimum makes five actions 400px, wider than most phones.
+                '& .MuiBottomNavigationAction-root': { minWidth: 0, px: 0.5 },
+              }}
             >
               {bottomItems.map((item) => (
                 <BottomNavigationAction

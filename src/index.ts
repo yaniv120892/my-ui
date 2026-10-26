@@ -6,6 +6,7 @@ export { I18nProvider, useI18n, useTranslations } from './i18n/I18nProvider';
 export type { Translate } from './i18n/I18nProvider.types';
 export { DEFAULT_LOCALE, LOCALES, LOCALE_COOKIE, intlLocale, isLocale, localeDirection } from './i18n/locale';
 export type { Direction, Locale } from './i18n/locale.types';
+export { createTranslator } from './i18n/createTranslator';
 export { commonMessages, formatMessage } from './i18n/messages';
 export type { CommonMessages } from './i18n/messages';
 export type { Dictionary, MessageVariables, Messages } from './i18n/messages.types';
