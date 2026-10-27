@@ -4,6 +4,7 @@ import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { DesignProvider } from '../DesignProvider.js';
 import type { Locale } from '../i18n/locale.types.js';
+import { commonMessages } from '../i18n/messages.js';
 import { AppShell } from './AppShell.js';
 
 const navigation = vi.hoisted(() => ({ pathname: '/transactions/42', refresh: () => {} }));
@@ -123,7 +124,9 @@ describe('AppShell', () => {
 
   it('stores the chosen language in the locale cookie and refreshes the server render', () => {
     renderShell('he');
-    fireEvent.click(screen.getAllByText('English')[0]!);
+    fireEvent.click(
+      screen.getByRole('button', { name: commonMessages.he['shell.switchLanguageHint'] }),
+    );
     expect(document.cookie).toContain('locale=en');
     expect(navigation.refresh).toHaveBeenCalledOnce();
   });

@@ -104,13 +104,10 @@ The package imports `next/*` subpaths, which Node's ESM resolver cannot find bec
 publishes no exports map. Let Vite process it:
 
 ```ts
-test: {
-  server: {
-    deps: {
-      inline: ['@yaniv120892/my-ui'];
-    }
-  }
-}
+// vitest.config.ts
+export default defineConfig({
+  test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } },
+});
 ```
 
 `DesignProvider` and `AppShell` call `useRouter` and `usePathname`, so specs that render them mock
