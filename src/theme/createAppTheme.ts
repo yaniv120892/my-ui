@@ -129,7 +129,9 @@ export function createAppTheme(direction: Direction): Theme {
       MuiListItemIcon: { styleOverrides: { root: { minWidth: 38 } } },
       // MUI's 80px minimum makes five actions 400px, wider than most phones.
       MuiBottomNavigationAction: {
-        styleOverrides: { root: ({ theme }) => ({ minWidth: 0, paddingInline: theme.spacing(0.5) }) },
+        styleOverrides: {
+          root: ({ theme }) => ({ minWidth: 0, paddingInline: theme.spacing(0.5) }),
+        },
       },
     },
   });

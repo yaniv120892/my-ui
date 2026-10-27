@@ -39,7 +39,12 @@ const heebo = Heebo({ subsets: ['hebrew', 'latin'], variable: '--font-sans', dis
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   return (
-    <html lang={locale} dir={localeDirection(locale)} className={heebo.variable} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={localeDirection(locale)}
+      className={heebo.variable}
+      suppressHydrationWarning
+    >
       <body>
         <InitColorSchemeScript attribute="data" />
         <DesignProvider locale={locale} messages={messages[locale]} appUrls={APP_URLS}>
@@ -78,7 +83,14 @@ App layout:
 ```tsx
 <AppShell
   app="expenses"
-  nav={[{ href: '/transactions', label: t('nav.transactions'), icon: ReceiptLongOutlinedIcon, showInBottomBar: true }]}
+  nav={[
+    {
+      href: '/transactions',
+      label: t('nav.transactions'),
+      icon: ReceiptLongOutlinedIcon,
+      showInBottomBar: true,
+    },
+  ]}
   accountLabel={session?.email}
   onLogout={handleLogout}
 >
@@ -92,7 +104,13 @@ The package imports `next/*` subpaths, which Node's ESM resolver cannot find bec
 publishes no exports map. Let Vite process it:
 
 ```ts
-test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } }
+test: {
+  server: {
+    deps: {
+      inline: ['@yaniv120892/my-ui'];
+    }
+  }
+}
 ```
 
 `DesignProvider` and `AppShell` call `useRouter` and `usePathname`, so specs that render them mock

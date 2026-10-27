@@ -98,7 +98,10 @@ export function AppShell({
         open={drawerOpen}
         onClose={closeDrawer}
         ModalProps={{ keepMounted: true }}
-        sx={{ display: { xs: 'block', [DESKTOP]: 'none' }, '& .MuiDrawer-paper': { width: SHELL.drawerWidth } }}
+        sx={{
+          display: { xs: 'block', [DESKTOP]: 'none' },
+          '& .MuiDrawer-paper': { width: SHELL.drawerWidth },
+        }}
       >
         {drawer}
       </Drawer>
@@ -116,7 +119,11 @@ export function AppShell({
         >
           <Toolbar sx={{ minHeight: SHELL.appBarHeight, gap: 1 }}>
             {!hasBottomBar && (
-              <IconButton edge="start" onClick={() => setDrawerOpen(true)} aria-label={translate('shell.openNavigation')}>
+              <IconButton
+                edge="start"
+                onClick={() => setDrawerOpen(true)}
+                aria-label={translate('shell.openNavigation')}
+              >
                 <MenuRoundedIcon />
               </IconButton>
             )}
@@ -216,7 +223,9 @@ function DrawerContent({
                 </ListItemIcon>
                 <ListItemText
                   primary={item.label}
-                  slotProps={{ primary: { sx: { fontSize: '0.9rem', fontWeight: selected ? 600 : 500 } } }}
+                  slotProps={{
+                    primary: { sx: { fontSize: '0.9rem', fontWeight: selected ? 600 : 500 } },
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -238,7 +247,11 @@ function DrawerContent({
             <ModeToggle />
             {onLogout && (
               <Tooltip title={translate('shell.logout')}>
-                <IconButton size="small" onClick={() => void onLogout()} aria-label={translate('shell.logout')}>
+                <IconButton
+                  size="small"
+                  onClick={() => void onLogout()}
+                  aria-label={translate('shell.logout')}
+                >
                   <LogoutRoundedIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -259,13 +272,27 @@ function NavIcon({ item }: { item: NavItem }) {
   );
 }
 
-function mostSpecificActiveItem({ nav, pathname }: { nav: NavItem[]; pathname: string }): NavItem | undefined {
-  const matches = nav.filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+function mostSpecificActiveItem({
+  nav,
+  pathname,
+}: {
+  nav: NavItem[];
+  pathname: string;
+}): NavItem | undefined {
+  const matches = nav.filter(
+    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  );
   return matches.sort((a, b) => b.href.length - a.href.length)[0];
 }
 
 /** "More" is selected only for a known page that lives behind it, not for a route outside nav. */
-function bottomBarSelection({ current, bottomItems }: { current: NavItem | undefined; bottomItems: NavItem[] }) {
+function bottomBarSelection({
+  current,
+  bottomItems,
+}: {
+  current: NavItem | undefined;
+  bottomItems: NavItem[];
+}) {
   if (!current) {
     return null;
   }

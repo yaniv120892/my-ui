@@ -10,7 +10,9 @@ export function resolveLocale({ cookieValue, acceptLanguage }: LocaleRequest): L
   if (isLocale(cookieValue)) {
     return cookieValue;
   }
-  const negotiator = new Negotiator({ headers: { [ACCEPT_LANGUAGE_HEADER]: acceptLanguage ?? '' } });
+  const negotiator = new Negotiator({
+    headers: { [ACCEPT_LANGUAGE_HEADER]: acceptLanguage ?? '' },
+  });
   const preferred = negotiator.language([...LOCALES, RETIRED_HEBREW_CODE]);
   if (preferred === RETIRED_HEBREW_CODE) {
     return 'he';
