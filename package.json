@@ -20,10 +20,12 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
-    "prepare": "npm run build",
+    "prepare": "(husky || true) && npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "lint": "tsc --noEmit"
+    "test": "vitest run"
   },
   "engines": {
     "node": ">=22"
@@ -58,11 +60,17 @@
     "@types/react-dom": "^19.3.0",
     "@types/stylis": "^4.2.7",
     "@vitejs/plugin-react": "^6.1.2",
+    "@yaniv120892/dev-config": "github:yaniv120892/dev-config#v0.1.4",
+    "eslint": "^10.13.0",
     "happy-dom": "^21.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "next": "^16.4.3",
+    "prettier": "^3.9.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.12"
-  }
+  },
+  "prettier": "@yaniv120892/dev-config/prettier"
 }
