@@ -21,7 +21,9 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-const APP_URLS = { expenses: 'https://expenses.example.test', shopping: 'https://shopping.example.test' };
+const APP_URLS = { expenses: 'https://expenses.example.test', shopping: 'https://shopping.example.test',
+  parking: 'https://parking.example.test',
+};
 
 function renderShell(locale: Locale) {
   return render(
@@ -62,6 +64,8 @@ describe('AppShell', () => {
     expect(active.some((link) => link.classList.contains('Mui-selected'))).toBe(true);
     const otherApps = screen.getAllByRole('link', { name: 'My Shopping' });
     expect(otherApps[0]?.getAttribute('href')).toBe('https://shopping.example.test');
+    const parking = screen.getAllByRole('link', { name: 'My Parking' });
+    expect(parking[0]?.getAttribute('href')).toBe('https://parking.example.test');
     expect(screen.queryAllByRole('link', { name: 'My Expenses' })).toHaveLength(0);
     expect(screen.queryAllByRole('link', { name: 'My Investments' })).toHaveLength(0);
   });

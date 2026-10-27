@@ -8,6 +8,7 @@ export type CommonMessageKey =
   | 'app.expenses'
   | 'app.investments'
   | 'app.shopping'
+  | 'app.parking'
   | 'shell.openNavigation'
   | 'shell.more'
   | 'shell.logout'

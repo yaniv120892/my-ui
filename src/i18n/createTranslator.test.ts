@@ -6,5 +6,6 @@ describe('createTranslator', () => {
     const translate = createTranslator({ locale: 'he', messages: { 'mail.code': 'הקוד שלך: {code}' } });
     expect(translate('mail.code', { code: 123 })).toBe('הקוד שלך: 123');
     expect(translate('app.shopping')).toBe('הקניות שלי');
+    expect(translate('app.parking')).toBe('החניה שלי');
   });
 });
