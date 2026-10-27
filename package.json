@@ -1,6 +1,6 @@
 {
   "name": "@yaniv120892/my-ui",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shared design for the My apps: theme, bilingual (he/en) i18n, app shell",
   "license": "MIT",
   "type": "module",

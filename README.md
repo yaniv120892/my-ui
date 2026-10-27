@@ -1,6 +1,6 @@
 # my-ui
 
-Shared design for the My apps — **My Expenses**, **My Investments**, **My Shopping** — so they
+Shared design for the My apps — **My Expenses**, **My Investments**, **My Shopping**, **My Parking** — so they
 look and read as one product before they are merged into one.
 
 What it gives each app:
@@ -17,7 +17,7 @@ What it gives each app:
 ## Install
 
 ```bash
-npm install github:yaniv120892/my-ui#v0.1.0
+npm install github:yaniv120892/my-ui#v0.2.0
 ```
 
 The app also installs the packages under `peerDependencies` in `package.json`.
@@ -100,7 +100,7 @@ test: { server: { deps: { inline: ['@yaniv120892/my-ui'] } } }
 
 ## Conventions shared by every app
 
-- Names: "My Expenses" / "ההוצאות שלי", "My Investments" / "ההשקעות שלי", "My Shopping" / "הקניות שלי".
+- Names: "My Expenses" / "ההוצאות שלי", "My Investments" / "ההשקעות שלי", "My Shopping" / "הקניות שלי", "My Parking" / "החניה שלי".
 - Write layouts for LTR. Physical sides in `sx` (`ml`, `left`, `borderRight`) are flipped by the
   RTL plugin; logical ones (`marginInlineStart`) are flipped by the browser. Never hand-mirror.
 - Money in / gains: `palette.charts.positive`. Money out / losses: `palette.charts.negative`.
