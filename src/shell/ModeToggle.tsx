@@ -18,7 +18,11 @@ export function ModeToggle() {
   return (
     <Tooltip title={label}>
       <IconButton size="small" onClick={toggleMode} aria-label={label}>
-        {isDark ? <LightModeOutlinedIcon fontSize="small" /> : <DarkModeOutlinedIcon fontSize="small" />}
+        {isDark ? (
+          <LightModeOutlinedIcon fontSize="small" />
+        ) : (
+          <DarkModeOutlinedIcon fontSize="small" />
+        )}
       </IconButton>
     </Tooltip>
   );

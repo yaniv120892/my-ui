@@ -4,6 +4,7 @@ import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { DesignProvider } from '../DesignProvider.js';
 import type { Locale } from '../i18n/locale.types.js';
+import { commonMessages } from '../i18n/messages.js';
 import { AppShell } from './AppShell.js';
 
 const navigation = vi.hoisted(() => ({ pathname: '/transactions/42', refresh: () => {} }));
@@ -33,7 +34,13 @@ function renderShell(locale: Locale) {
       <AppShell
         app="expenses"
         nav={[
-          { href: '/transactions', label: 'Transactions', icon: ReceiptLongOutlinedIcon, badge: 3, showInBottomBar: true },
+          {
+            href: '/transactions',
+            label: 'Transactions',
+            icon: ReceiptLongOutlinedIcon,
+            badge: 3,
+            showInBottomBar: true,
+          },
           { href: '/settings', label: 'Settings', icon: SettingsOutlinedIcon },
           { href: '/settings/profile', label: 'Profile', icon: SettingsOutlinedIcon },
         ]}
@@ -91,15 +98,19 @@ describe('AppShell', () => {
   it('selects More for a page behind it, and nothing for a route outside nav', () => {
     navigation.pathname = '/settings';
     renderShell('en');
-    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).toContain('Mui-selected');
+    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).toContain(
+      'Mui-selected',
+    );
     cleanup();
 
     navigation.pathname = '/onboarding';
     renderShell('en');
-    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).not.toContain('Mui-selected');
+    expect(screen.getByRole('button', { name: 'More', hidden: true }).classList).not.toContain(
+      'Mui-selected',
+    );
   });
 
-  it('lets five bottom-bar actions fit a phone by dropping MUI\'s 80px minimum', () => {
+  it("lets five bottom-bar actions fit a phone by dropping MUI's 80px minimum", () => {
     renderShell('en');
     const more = screen.getByRole('button', { name: 'More', hidden: true });
     expect(Number.parseFloat(getComputedStyle(more).minWidth)).toBe(0);
@@ -113,7 +124,9 @@ describe('AppShell', () => {
 
   it('stores the chosen language in the locale cookie and refreshes the server render', () => {
     renderShell('he');
-    fireEvent.click(screen.getAllByText('English')[0]!);
+    fireEvent.click(
+      screen.getByRole('button', { name: commonMessages.he['shell.switchLanguageHint'] }),
+    );
     expect(document.cookie).toContain('locale=en');
     expect(navigation.refresh).toHaveBeenCalledOnce();
   });

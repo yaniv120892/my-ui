@@ -12,12 +12,16 @@ describe('requestLocale', () => {
   });
 
   it('falls back to Accept-Language without the cookie', () => {
-    const request = new Request('https://app.example.test', { headers: { 'accept-language': 'en-GB' } });
+    const request = new Request('https://app.example.test', {
+      headers: { 'accept-language': 'en-GB' },
+    });
     expect(requestLocale(request)).toBe('en');
   });
 
   it('takes the last of duplicate locale cookies, as cookies() does', () => {
-    const request = new Request('https://app.example.test', { headers: { cookie: 'locale=he; locale=en' } });
+    const request = new Request('https://app.example.test', {
+      headers: { cookie: 'locale=he; locale=en' },
+    });
     expect(requestLocale(request)).toBe('en');
   });
 

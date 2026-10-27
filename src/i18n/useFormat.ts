@@ -25,12 +25,22 @@ export function useFormat() {
         value: number;
         currency?: string;
         options?: Intl.NumberFormatOptions;
-      }) => numberFormat({ languageTag, options: { style: 'currency', currency, ...options } }).format(value),
-      percent: ({ value, options }: { value: number; options?: Intl.NumberFormatOptions }) =>
-        numberFormat({ languageTag, options: { style: 'percent', maximumFractionDigits: 1, ...options } }).format(
+      }) =>
+        numberFormat({ languageTag, options: { style: 'currency', currency, ...options } }).format(
           value,
         ),
-      date: ({ value, options }: { value: Date | string | number; options?: Intl.DateTimeFormatOptions }) => {
+      percent: ({ value, options }: { value: number; options?: Intl.NumberFormatOptions }) =>
+        numberFormat({
+          languageTag,
+          options: { style: 'percent', maximumFractionDigits: 1, ...options },
+        }).format(value),
+      date: ({
+        value,
+        options,
+      }: {
+        value: Date | string | number;
+        options?: Intl.DateTimeFormatOptions;
+      }) => {
         const dateOptions = { timeZone: SHARED_TIME_ZONE, ...(options ?? { dateStyle: 'medium' }) };
         return dateFormat({ languageTag, options: dateOptions }).format(new Date(value));
       },
@@ -38,7 +48,13 @@ export function useFormat() {
   }, [locale]);
 }
 
-function numberFormat({ languageTag, options }: { languageTag: string; options: Intl.NumberFormatOptions }) {
+function numberFormat({
+  languageTag,
+  options,
+}: {
+  languageTag: string;
+  options: Intl.NumberFormatOptions;
+}) {
   return cached({
     cache: numberFormats,
     key: `${languageTag}|${JSON.stringify(options)}`,
@@ -46,7 +62,13 @@ function numberFormat({ languageTag, options }: { languageTag: string; options: 
   });
 }
 
-function dateFormat({ languageTag, options }: { languageTag: string; options: Intl.DateTimeFormatOptions }) {
+function dateFormat({
+  languageTag,
+  options,
+}: {
+  languageTag: string;
+  options: Intl.DateTimeFormatOptions;
+}) {
   return cached({
     cache: dateFormats,
     key: `${languageTag}|${JSON.stringify(options)}`,

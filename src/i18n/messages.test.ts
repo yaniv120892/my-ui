@@ -3,9 +3,12 @@ import { commonMessages, formatMessage } from './messages.js';
 
 describe('formatMessage', () => {
   it('fills placeholders', () => {
-    expect(formatMessage({ template: '{count} items for {name}', variables: { count: 3, name: 'Dana' } })).toBe(
-      '3 items for Dana',
-    );
+    expect(
+      formatMessage({
+        template: '{count} items for {name}',
+        variables: { count: 3, name: 'Dana' },
+      }),
+    ).toBe('3 items for Dana');
   });
 
   it('leaves unknown placeholders visible', () => {
@@ -13,7 +16,9 @@ describe('formatMessage', () => {
   });
 
   it('does not fill placeholders from Object.prototype', () => {
-    expect(formatMessage({ template: 'Built by {constructor}', variables: {} })).toBe('Built by {constructor}');
+    expect(formatMessage({ template: 'Built by {constructor}', variables: {} })).toBe(
+      'Built by {constructor}',
+    );
   });
 });
 

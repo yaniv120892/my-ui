@@ -18,7 +18,9 @@ function renderFormat() {
 describe('useFormat', () => {
   it('prints a date-only value as that calendar day', () => {
     const { result } = renderFormat();
-    expect(result.current.date({ value: '2026-10-24', options: { day: 'numeric', month: 'short' } })).toBe('Oct 24');
+    expect(
+      result.current.date({ value: '2026-10-24', options: { day: 'numeric', month: 'short' } }),
+    ).toBe('Oct 24');
   });
 
   it('prints dates in the apps’ shared time zone, whatever the runtime’s own zone is', () => {
@@ -29,6 +31,11 @@ describe('useFormat', () => {
         </DesignProvider>
       ),
     });
-    expect(result.current.date({ value: '2026-03-05T23:30:00Z', options: { day: 'numeric', month: 'short' } })).toBe('Mar 6');
+    expect(
+      result.current.date({
+        value: '2026-03-05T23:30:00Z',
+        options: { day: 'numeric', month: 'short' },
+      }),
+    ).toBe('Mar 6');
   });
 });

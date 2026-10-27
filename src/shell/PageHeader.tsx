@@ -17,8 +17,14 @@ export function PageHeader({
       spacing={1.5}
       sx={{ mb: 3, alignItems: { sm: 'center' }, justifyContent: 'space-between' }}
     >
-      <Stack spacing={0.5} sx={{ display: { xs: subtitle ? 'flex' : 'none', [SHELL.desktopBreakpoint]: 'flex' } }}>
-        <Typography variant="h1" sx={{ display: { xs: 'none', [SHELL.desktopBreakpoint]: 'block' } }}>
+      <Stack
+        spacing={0.5}
+        sx={{ display: { xs: subtitle ? 'flex' : 'none', [SHELL.desktopBreakpoint]: 'flex' } }}
+      >
+        <Typography
+          variant="h1"
+          sx={{ display: { xs: 'none', [SHELL.desktopBreakpoint]: 'block' } }}
+        >
           {title}
         </Typography>
         {subtitle && (

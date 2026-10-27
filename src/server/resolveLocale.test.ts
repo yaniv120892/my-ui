@@ -11,7 +11,9 @@ describe('resolveLocale', () => {
   });
 
   it('honours Accept-Language quality ordering', () => {
-    expect(resolveLocale({ cookieValue: undefined, acceptLanguage: 'fr;q=1, en;q=0.5, he;q=0.8' })).toBe('he');
+    expect(
+      resolveLocale({ cookieValue: undefined, acceptLanguage: 'fr;q=1, en;q=0.5, he;q=0.8' }),
+    ).toBe('he');
   });
 
   it('maps the retired iw code to Hebrew', () => {
