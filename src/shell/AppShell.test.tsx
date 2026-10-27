@@ -21,7 +21,9 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-const APP_URLS = { expenses: 'https://expenses.example.test', shopping: 'https://shopping.example.test',
+const APP_URLS = {
+  expenses: 'https://expenses.example.test',
+  shopping: 'https://shopping.example.test',
   parking: 'https://parking.example.test',
 };
 

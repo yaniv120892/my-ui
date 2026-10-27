@@ -17,7 +17,7 @@ What it gives each app:
 ## Install
 
 ```bash
-npm install github:yaniv120892/my-ui#v0.1.0
+npm install github:yaniv120892/my-ui#v0.2.0
 ```
 
 The app also installs the packages under `peerDependencies` in `package.json`.
