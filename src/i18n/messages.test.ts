@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { APP_IDS } from '../apps/appIds.js';
+import { LOCALES } from './localeCodes.js';
 import { commonMessages, formatMessage } from './messages.js';
 
 describe('formatMessage', () => {
@@ -26,4 +28,11 @@ describe('commonMessages', () => {
   it('has the same keys in every locale', () => {
     expect(Object.keys(commonMessages.he).sort()).toEqual(Object.keys(commonMessages.en).sort());
   });
+
+  it.each(LOCALES.flatMap((locale) => APP_IDS.map((id) => ({ locale, id }))))(
+    'names $id in $locale',
+    ({ locale, id }) => {
+      expect(commonMessages[locale][`app.${id}`]).toBeTruthy();
+    },
+  );
 });
