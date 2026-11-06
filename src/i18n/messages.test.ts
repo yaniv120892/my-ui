@@ -32,7 +32,9 @@ describe('commonMessages', () => {
   it.each(LOCALES.flatMap((locale) => APP_IDS.map((id) => ({ locale, id }))))(
     'names $id in $locale',
     ({ locale, id }) => {
-      expect(commonMessages[locale][`app.${id}`]).toBeTruthy();
+      const name = commonMessages[locale][`app.${id}`];
+      expect(name?.trim()).toBeTruthy();
+      expect(name).not.toBe(`app.${id}`);
     },
   );
 });
