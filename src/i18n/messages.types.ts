@@ -1,3 +1,4 @@
+import type { AppId } from '../apps/registry.types.js';
 import type { Locale } from './locale.types.js';
 
 export type Messages = Record<string, string>;
@@ -5,10 +6,7 @@ export type MessageVariables = Record<string, string | number>;
 
 /** The shell's own keys, shared by every app on top of its own messages. */
 export type CommonMessageKey =
-  | 'app.expenses'
-  | 'app.investments'
-  | 'app.shopping'
-  | 'app.parking'
+  | `app.${AppId}`
   | 'shell.openNavigation'
   | 'shell.more'
   | 'shell.logout'
