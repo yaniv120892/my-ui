@@ -60,7 +60,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/stylis": "^4.2.7",
     "@vitejs/plugin-react": "^6.1.2",
-    "@yaniv120892/dev-config": "github:yaniv120892/dev-config#v0.1.7",
+    "@yaniv120892/dev-config": "github:yaniv120892/dev-config#v0.1.8",
     "eslint": "^10.13.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "happy-dom": "^21.0.4",
