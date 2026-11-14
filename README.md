@@ -123,4 +123,7 @@ export default defineConfig({
 
 ## Release
 
-Bump `version`, merge, tag `vX.Y.Z`, then bump the tag in each app.
+Bump `version` in the same PR as the change — Vercel caches a git dependency by version, so a
+same-version change never reaches a deployed app. After the squash-merge, tag the merge commit:
+`gh release create v<version> --generate-notes`. Then bump the tag in each app and check that the
+lockfile's `resolved` SHA moved to the new tag.

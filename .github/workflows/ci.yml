@@ -14,6 +14,6 @@ permissions:
 
 jobs:
   gate:
-    uses: yaniv120892/dev-config/.github/workflows/node-ci.yml@v0.1.4
+    uses: yaniv120892/dev-config/.github/workflows/node-ci.yml@v0.1.7
     with:
       ignore-scripts: true
