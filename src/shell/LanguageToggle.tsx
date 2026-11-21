@@ -2,12 +2,12 @@
 
 import { Button, Tooltip } from '@mui/material';
 import TranslateRoundedIcon from '@mui/icons-material/TranslateRounded';
-import { useI18n, useTranslations } from '../i18n/I18nProvider.js';
+import { useI18n, useCommonTranslations } from '../i18n/I18nProvider.js';
 import { otherLocale } from '../i18n/locale.js';
 
 /** Labelled in the language it switches to, so it stays findable by someone who can't read the current one. */
 export function LanguageToggle() {
-  const translate = useTranslations();
+  const translate = useCommonTranslations();
   const { locale, setLocale } = useI18n();
   const other = otherLocale(locale);
   return (
