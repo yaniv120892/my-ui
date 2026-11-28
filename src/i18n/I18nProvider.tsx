@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createTranslator } from './createTranslator.js';
 import { LOCALE_COOKIE } from './locale.js';
 import type { Locale } from './locale.types.js';
-import type { Messages } from './messages.types.js';
+import type { CommonMessages, Messages } from './messages.types.js';
 import type { I18nContextValue, Translate } from './I18nProvider.types.js';
 
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
@@ -58,4 +58,9 @@ export function useI18n(): I18nContextValue {
  */
 export function useTranslations<M extends Messages = Messages>(): Translate<M> {
   return useI18n().translate;
+}
+
+/** The shell's translator: only the shared keys, so a mistyped shell key fails the typecheck. */
+export function useCommonTranslations(): Translate<CommonMessages> {
+  return useTranslations<CommonMessages>();
 }

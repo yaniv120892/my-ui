@@ -25,7 +25,7 @@ import {
 } from '@mui/material';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { useTranslations } from '../i18n/I18nProvider.js';
+import { useCommonTranslations } from '../i18n/I18nProvider.js';
 import { SHELL } from '../theme/createAppTheme.js';
 import { AppSwitcher } from './AppSwitcher.js';
 import type { AppShellProps, NavItem } from './AppShell.types.js';
@@ -53,7 +53,7 @@ export function AppShell({
   headerActions,
   children,
 }: AppShellProps) {
-  const translate = useTranslations();
+  const translate = useCommonTranslations();
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const current = mostSpecificActiveItem({ nav, pathname });
@@ -200,7 +200,7 @@ function DrawerContent({
   drawerActions,
   onNavigate,
 }: DrawerContentProps) {
-  const translate = useTranslations();
+  const translate = useCommonTranslations();
   return (
     <Stack sx={{ height: '100%', pt: SAFE_AREA_TOP }}>
       <Box sx={{ px: 2.5, py: 2.5 }}>
